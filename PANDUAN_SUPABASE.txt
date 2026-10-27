@@ -1,0 +1,21 @@
+PANDUAN SUPABASE — KWITANSI HDI
+
+Isi paket:
+- index.html, style.css, script.js: aplikasi kasir
+- supabase-config.js: tempat memasukkan URL project dan anon/public key
+- supabase-integration.js: sinkronisasi produk, daftar nama, dan transaksi
+- supabase-schema.sql: tabel database dan contoh policy untuk demo
+
+LANGKAH SETUP
+1. Buat project di https://supabase.com/ dan tunggu sampai siap.
+2. Buka SQL Editor di dashboard Supabase, buat query baru, lalu jalankan isi file supabase-schema.sql.
+3. Buka Project Settings > API (atau Connect). Salin Project URL dan anon/public key. JANGAN gunakan service_role key.
+4. Buka supabase-config.js dengan editor teks. Ganti ISI_SUPABASE_PROJECT_URL dan ISI_SUPABASE_ANON_PUBLIC_KEY dengan nilai milik project Anda.
+5. Simpan semua file dalam folder yang sama. Jalankan lewat server lokal/hosting (contoh VS Code Live Server), bukan dengan memisahkan file atau mengubah nama-nama script. Internet diperlukan untuk memuat library Supabase.
+6. Muat ulang halaman. Data produk, nama, dan transaksi akan dimuat dari satu baris hdi_app_state dan perubahan disinkronkan otomatis.
+
+PENTING KEAMANAN
+- SQL ini membuka akses baca/tulis untuk anon/authenticated agar mudah diuji. Siapa pun yang dapat mengakses website dan anon key dapat membaca atau mengubah data. Ini TIDAK aman untuk data siswa/pembayaran nyata.
+- Untuk penggunaan sekolah sungguhan, pasang Supabase Auth, gunakan akun petugas, dan ubah RLS agar hanya role yang berwenang dapat membaca/menulis. Jangan pernah menaruh service_role key di file JavaScript browser.
+- Semua produk, nama, dan transaksi disimpan sebagai JSON dalam satu record. Cocok untuk prototipe kecil; untuk produksi sebaiknya gunakan tabel terpisah dan audit log.
+- Salin/backup data lokal sebelum pertama kali memakai Supabase. Jika baris remote sudah berisi data, data remote akan menggantikan data lokal saat halaman dimuat.
